@@ -188,31 +188,30 @@ auto_save_olc = 1
 * The entrance/exit menu.
 MENU = 
 
-O MUNDO DE VITALIA
+  @GO MUNDO DE VITALIA@n
 
-         .-.
-        (0.0)
-      '=.|m|.='
-      .='/@\`=.
-         @8@
-     _   8@8   _
-    (@__/@8@\__@)
-     `-=:8@8:=-'
-         |:|
-         |:|   [1] Entrar no jogo.
-         |:|   [2]  Ler a historia deste mundo.
-         |:|   [3]  Ajustar a descriçao
-         |:|   [4]  Mudar a sua senha de acesso
-         |:|   [9]  Apagar o personagem
-         |:|   [0]  Deixar este mundo
-         |:|
-         |:|
-         |:|
-         |:|
-         |:|
-        \:/
-          ^
-
+         @r.-.@n
+        @r(@y0.0@r)@n
+      @g'=.@r|@ym@r|@g.='@n
+      @g.='@r/@y @r|@g`=.@n
+         @y8 8@n
+     @r_   @y8 8   @r_@n
+    @r(@y @r__/@y 8 @r\__@y @r)@n
+     @r`-@R=:@y8  8@R:=@r-'@n
+         @w|@W:@L|@n
+         @w|@W:@L|@n
+         @w|@W:@L|@n   @B[1]@n  Entrar no jogo
+         @w|@W:@L|@n   @B[2]@n  Ler a historia deste mundo
+         @w|@W:@L|@n   @B[3]@n  Ajustar a descrição
+         @w|@W:@L|@n   @B[4]@n  Mudar a sua senha de acesso
+         @w|@W:@L|@n   @B[9]@n  Apagar o personagem
+         @w|@W:@L|@n   @B[0]@n  Deixar este mundo
+         @w|@W:@L|@n
+         @w|@W:@L|@n
+         @w|@W:@L|@n
+         @w|@W:@L|@n
+         @w\:@L/@n
+          @w^@n
 
 -=>  Faca sua escolha: ~
 

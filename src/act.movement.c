@@ -23,7 +23,6 @@
 #include "act.h"
 #include "fight.h"
 #include "oasis.h"				/* for buildwalk */
-#include "ann.h"
 
 /* local only functions */
 /* do_simple_move utility functions */

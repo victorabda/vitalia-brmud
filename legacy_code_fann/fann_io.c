@@ -613,14 +613,14 @@ struct fann *fann_create_from_fd(FILE * conf, const char *configuration_file)
 	fann_skip("neurons (num_inputs, activation_function, activation_steepness)=");
 	for(neuron_it = ann->first_layer->first_neuron; neuron_it != last_neuron; neuron_it++)
 	{
-		if(fscanf
-		   (conf, "(%u, %u, " FANNSCANF ") ", &num_connections, &tmpVal,
-			&neuron_it->activation_steepness) != 3)
+		fann_type activation_steepness_temp;  // Variável temporária para evitar o problema de alinhamento
+		if (fscanf(conf, "(%u, %u, " FANNSCANF ") ", &num_connections, &tmpVal, &activation_steepness_temp) != 3)
 		{
-			fann_error((struct fann_error *) ann, FANN_E_CANT_READ_NEURON, configuration_file);
-			fann_destroy(ann);
-			return NULL;
+		    fann_error((struct fann_error *) ann, FANN_E_CANT_READ_NEURON, configuration_file);
+		    fann_destroy(ann);
+		    return NULL;
 		}
+		neuron_it->activation_steepness = activation_steepness_temp;  // Copia o valor da variável temporária para o campo packed
 		neuron_it->activation_function = (enum fann_activationfunc_enum)tmpVal;
 		neuron_it->first_con = ann->total_connections;
 		ann->total_connections += num_connections;

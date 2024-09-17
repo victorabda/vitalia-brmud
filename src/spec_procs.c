@@ -28,7 +28,6 @@
 #include "modify.h"
 #include "spedit.h"
 #include "formula.h"
-#include "./include/fann.h"
 
 /* locally defined functions of local (file) scope */
 
@@ -136,13 +135,8 @@ SPECIAL(guild)
 
 	int class, skill_num, percent, level, rts_code;
 	struct obj_data *object;
-   struct fann *ann;
    int count_obj = 0;
    int grupo;
-
-	fann_type input[29];
-	fann_type output[6];
-	struct fann_train_data *ann_train;
 
 	if (IS_NPC(ch) || !CMD_IS("practice"))
 		return (FALSE);
@@ -157,43 +151,7 @@ SPECIAL(guild)
 	{
 			count_obj++;
 	}
-	 /*pega dados pro aventureiro */
-		input[0] = (float)GET_HIT(ch) / 5000;
-	input[1] = (float) GET_MAX_HIT(ch) / 5000;
 
-	input[2] = (float)GET_MANA(ch) / 5000;
-	input[3] = (float) GET_MAX_MANA(ch) / 5000;
-	input[4] = (float)GET_MOVE(ch) / 5000;
-	input[5] = (float) GET_MAX_MOVE(ch) / 5000;
-	input[6] = (float) GET_EXP(ch) / 500000000;
-	input[7] = (float)  GET_ROOM_VNUM(IN_ROOM(ch)) / 100000;
-	input[8] = 1/(1+exp(-GET_CLASS(ch)));
-	input[9] = 1/(1+exp(-GET_POS(ch)));
-	input[10] = (float) GET_ALIGNMENT(ch) / 1000;
-	input[11] = (float) compute_armor_class(ch) / 200;
-	input[12] = (float) GET_STR(ch) / 25;
-	input[13] = (float) GET_ADD(ch) / 25;
-	input[14] = (float) GET_INT(ch) / 25;
-	input[15] = (float) GET_WIS(ch) / 25;
-	input[16] = (float) GET_CON(ch) / 25;
-	input[17] = (float) GET_DEX(ch) / 25;
-	input[18] = (float) GET_GOLD(ch) / 100000000;
-	input[19] = (float) GET_BANK_GOLD(ch) / 100000000;
-	input[20] = 1/(1+exp(-GET_COND(ch, HUNGER)));
-	input[21] = 1/(1+exp(-GET_COND(ch, THIRST)));
-	input[22] = (float) GET_PRACTICES(ch) / 100;
-	input[23] = grupo;
-	//input 24 eh o clan em vez de mudhora
-	input[24] = 1/(1+exp(-0));
-	input[25] = (float) GET_BREATH(ch) / 15;
-	input[26] = (float) GET_HITROLL(ch) / 100;
-	input[27] = (float) GET_DAMROLL(ch) / 100;
-	input[28] = (float) count_obj / 100;
-
-	
-	output[0] = 580/784;
-	output[1] = 1/(1+exp(-CMD_ONEARG));
-	output[2] = 1/(1+exp(-CMD_ARG_SKILL));
 	skip_spaces(&argument);
 
 	if (!*argument)
@@ -216,8 +174,6 @@ SPECIAL(guild)
 
 	skill_num = spell->vnum;
 	level = get_spell_level(skill_num, GET_CLASS(ch));
-   output[3] = 1/(1+exp(-skill_num));
-   output[4] = output[5] = 0;
    
 	if ((level == -1) || (GET_LEVEL(ch) < level))
 	{
@@ -248,15 +204,6 @@ SPECIAL(guild)
 	if (GET_SKILL(ch, skill_num) >= LEARNED(ch))
 		send_to_char(ch, "Voce agora conhece o suficiente!\r\n");
 
- 	ann = fann_create_from_file("etc/aventureiro.fann");
- 	
-  	if (GET_LEVEL(ch) < LVL_GOD) {
-   ann_train =  fann_create_train_array(1,29,input,6,output);
-		fann_train_on_data(ann,ann_train,500,500,0);
-				fann_destroy_train(ann_train);
-  	}
-		fann_save(ann, "etc/aventureiro.fann");
-		fann_destroy(ann);
 	return (TRUE);
 }
 
